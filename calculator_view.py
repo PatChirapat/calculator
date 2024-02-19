@@ -64,13 +64,13 @@ class CalculatorView(tk.Tk):
             operator_row = index
             operator_col = 0
             operator_button = tk.Button(operator_frame, text=values,
-                                        bg="grey", fg="black",
+                                        bg="orange", fg="black",
                                         command=lambda v=values:
                                         self.controller.on_operator_evaluate(v)
                                         if v != "="
                                         else self.controller.calculate())
             operator_button.grid(row=operator_row, column=operator_col,
-                                  sticky=tk.NSEW)
+                                 sticky=tk.NSEW)
 
         for i in range(len(operators)):
             operator_frame.grid_rowconfigure(i, weight=1)
