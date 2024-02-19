@@ -1,5 +1,8 @@
+"""view of the calculator"""
 import tkinter as tk
 from tkinter import ttk
+import simpleaudio
+
 
 class CalculatorView(tk.Tk):
     def __init__(self, controller):
@@ -39,6 +42,7 @@ class CalculatorView(tk.Tk):
             self.grid_columnconfigure(i, weight=1)
 
     def make_keypad(self) -> ttk.Frame:
+        """Create the keypad"""
         keypad_frame = ttk.Frame(self)
         keys = list('7894561230.=')
         for index, value in enumerate(keys):
@@ -58,6 +62,7 @@ class CalculatorView(tk.Tk):
         return keypad_frame
 
     def make_operator_pad(self) -> ttk.Frame:
+        """Create the operator pad"""
         operator_frame = ttk.Frame(self)
         operators = ["DEL", "CLR", "*", "/", "+", "-", "^", "(", ")", "mod"]
         for index, values in enumerate(operators):
@@ -79,6 +84,7 @@ class CalculatorView(tk.Tk):
         return operator_frame
 
     def make_functions_pad(self) -> ttk.Frame:
+        """Create the function pad"""
         function_frame = ttk.Frame(self)
         functions = ["EXP", "ln", "log10", "log2", "sqrt", "!"]
         self.function_combobox = ttk.Combobox(function_frame, values=functions, state='readonly')
@@ -93,6 +99,7 @@ class CalculatorView(tk.Tk):
         return function_frame
 
     def make_history_pad(self) -> ttk.Frame:
+        """Create the history pad"""
         history_frame = ttk.Frame(self)
         history_label = ttk.Label(history_frame, text="History:",
                                   font=('Arial', 12))
@@ -111,6 +118,7 @@ class CalculatorView(tk.Tk):
         return history_frame
 
     def make_display(self) -> ttk.Frame:
+        """make the display"""
         display_frame = ttk.Frame(self)
         display_frame.grid(row=0, column=0, columnspan=2, sticky=tk.NSEW)
         self.display_entry = tk.Entry(display_frame, textvariable=self.display_text,
@@ -121,15 +129,28 @@ class CalculatorView(tk.Tk):
         return display_frame
 
     def function_calculation(self, event):
+        """Calculate the function value"""
         selected_function = self.function_combobox.get()
         self.controller.on_function_evaluate(selected_function)
 
     def display_history(self, history):
+        """Display the history"""
         self.history_text.config(state='normal')
         self.history_text.delete('1.0', tk.END)
         self.history_text.insert(tk.END, history)
         self.history_text.config(state='disabled')
 
     def display_error(self, message):
+        """Display the error message"""
         self.display_text.set(message)
         self.after(1500, self.controller.on_operator_evaluate, "CLR")
+
+    def play_error_sound(self):
+        """Play error sound"""
+        self.wave_obj = simpleaudio.WaveObject.from_wave_file("errorsound.wav")
+        self.play_obj = self.wave_obj.play()
+
+    def stop_error_sound(self):
+        """Stop error sound"""
+        if self.play_error_sound():
+            self.play_obj.stop()
