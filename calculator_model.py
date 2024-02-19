@@ -1,3 +1,4 @@
+"""model for the calculator application."""
 import math
 
 
@@ -17,17 +18,21 @@ class CalculatorModel:
         }
 
     def add_display(self, value):
+        """add value"""
         self.current_display += str(value)
 
     def add_decimal(self):
+        """add decimal point"""
         if "." not in self.current_display:
             self.current_display += "."
 
     def calculate_operator(self, operator):
+        """calculate operator"""
         if operator in self.operators:
             self.current_display += operator
 
     def calculate_function(self, func):
+        """calculate function"""
         try:
             if func in self.functions:
                 if func == "sqrt":
@@ -43,6 +48,7 @@ class CalculatorModel:
             raise ValueError("Invalid expression")
 
     def delete_last_element(self):
+        """delete last element"""
         if len(self.current_display) != 0:
             if self.current_display[-1] in self.operators:
                 self.current_display = self.current_display[:-1]
@@ -52,9 +58,11 @@ class CalculatorModel:
                 self.current_display = self.current_display[:-1]
 
     def clear_display(self):
+        """clear display"""
         self.current_display = ""
 
     def evaluate_result(self):
+        """evaluate result"""
         try:
             result = eval(self.current_display)
             self.history.append(self.current_display + " = " + str(result))
