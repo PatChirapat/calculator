@@ -33,6 +33,4 @@ class CalculatorController:
         self.model.calculate_function(function)
         self.view.display_text.set(self.model.current_display)
 
-if __name__ == '__main__':
-    app = CalculatorController()
-    app.view.mainloop()
+
