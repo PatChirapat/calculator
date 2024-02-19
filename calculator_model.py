@@ -13,7 +13,7 @@ class CalculatorModel:
             "log10": lambda x: math.log10(float(x)),
             "log2": lambda x: math.log2(float(x)),
             "sqrt": lambda x: math.sqrt(float(x)),
-            "X!": lambda x: math.factorial(int(x))
+            "!": lambda x: math.factorial(int(x))
         }
 
     def add_display(self, value):
@@ -29,7 +29,9 @@ class CalculatorModel:
 
     def calculate_function(self, func):
         if func in self.functions:
-            self.current_display = str(self.functions[func](self.current_display))
+            result = self.functions[func](self.current_display)
+            self.current_display = str(result)
+            return result
 
     def delete_last_element(self):
         if len(self.current_display) != 0:
