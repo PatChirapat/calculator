@@ -12,7 +12,10 @@ class CalculatorController:
             self.model.add_display(key)
             self.view.display_text.set(self.model.current_display)
         else:
-            if self.model.current_display and self.model.current_display[0] in self.view.function_combobox['values']:
+            expression = self.model.current_display
+
+            if expression and any(op in expression for op in
+                                  self.view.function_combobox['values']):
                 selected_function = self.view.function_combobox.get()
                 self.on_function_evaluate(selected_function)
             else:
