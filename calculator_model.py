@@ -28,10 +28,19 @@ class CalculatorModel:
             self.current_display += operator
 
     def calculate_function(self, func):
-        if func in self.functions:
-            result = self.functions[func](self.current_display)
-            self.current_display = str(result)
-            return result
+        try:
+            if func in self.functions:
+                if func == "sqrt":
+                    if self.current_display:
+                        result = self.functions[func](eval(self.current_display))
+                        self.current_display = str(result)
+                        return result
+                else:
+                    result = self.functions[func](float(self.current_display))
+                    self.current_display = str(result)
+                    return result
+        except Exception as e:
+            raise ValueError("Invalid expression")
 
     def delete_last_element(self):
         if len(self.current_display) != 0:
