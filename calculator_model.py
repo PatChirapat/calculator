@@ -22,6 +22,10 @@ class CalculatorModel:
         if "." not in self.current_display:
             self.current_display += "."
 
+    def calculate_operator(self, operator):
+        if operator in self.operators:
+            self.current_display += operator
+
     def calculate_function(self, func):
         if func in self.functions:
             self.current_display = str(self.functions[func](self.current_display))
